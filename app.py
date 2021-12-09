@@ -1,6 +1,5 @@
+import os
 import jwt
-from flask import Flask
-from flask import request
 from functools import wraps
 from flask_cors import CORS
 from config import AppConfig
@@ -10,6 +9,7 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta
 import text2emotion as emotion_detection
 from email_validator import validate_email
+from flask import Flask, request, redirect, url_for, render_template
 from models import User, Journal, EntryMood, UserLogin
 from schemas import (
     user_schema,
@@ -21,7 +21,11 @@ from schemas import (
 
 
 # Initialize flask app
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    static_folder="build/static",
+    template_folder="build",
+)
 # Set app config
 app.config.from_object(AppConfig)
 # Register bcrypt for password encrypt/decrypt
@@ -71,6 +75,11 @@ def is_empty(value: str):
     if value is None:
         return True
     return False
+
+
+@app.route("/")
+def index():
+    return render_template("index.html")
 
 
 @app.route("/register", methods=["GET", "POST"])

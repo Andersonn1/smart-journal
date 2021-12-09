@@ -4,7 +4,6 @@ import { setAppUser, setAuthToken, isAuthenticated } from "./utils/auth";
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -12,10 +11,12 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Alert from '@mui/material/Alert';
 import Collapse from '@mui/material/Collapse';
+import { Redirect, Link } from "react-router-dom";
+import { PinDropSharp } from "@mui/icons-material";
 
 const theme = createTheme();
 
-export default function Login() {
+export default function Login({ history }) {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const [error, setError] = useState();
@@ -41,7 +42,8 @@ export default function Login() {
     }
     const renderRedirect = () => {
         if (isAuthenticated()) {
-            window.location.pathname = '/dashboard';
+            history.push('/dashboard');
+            //window.location.pathname = '/dashboard';
         }
     }
     return (<ThemeProvider theme={theme}>
@@ -96,7 +98,7 @@ export default function Login() {
                     </Button>
                     <Grid container>
                         <Grid item>
-                            <Link href="/register" variant="body2">
+                            <Link to="/signup" variant="body2">
                                 {"Don't have an account? Sign Up"}
                             </Link>
                         </Grid>

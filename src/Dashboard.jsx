@@ -19,6 +19,7 @@ import { ButtonGroup, Grid, IconButton } from '@mui/material';
 import { useCallback } from 'react';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { Redirect } from 'react-router-dom';
 const style = {
     position: 'absolute',
     top: '50%',
@@ -30,7 +31,7 @@ const style = {
     boxShadow: 24,
     p: 4,
 };
-export default function Dashboard() {
+export default function Dashboard({ history }) {
     const [data, setData] = useState([]);
     const [mood, setMood] = useState([]);
     const [title, setTitle] = useState('');
@@ -186,7 +187,8 @@ export default function Dashboard() {
 
     const renderRedirect = () => {
         if (!isAuthenticated()) {
-            window.location.pathname = '/';
+            history.push("/")
+            // window.location.pathname = '/';
         }
     }
 
